@@ -16,7 +16,7 @@
   <body>
     <div class="container">
       <div class="row">
-          <?=@$content?>
+          <?=@$content?> 
       </div>
     </div>
   </body>

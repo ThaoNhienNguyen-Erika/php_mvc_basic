@@ -96,4 +96,14 @@ class Post
         }
         return null;
     }
+    public static function search($title)
+    {
+        $db = DB::getInstance();
+        $req = $db->prepare('SELECT * FROM posts WHERE title LIKE '%title%'');
+        $req->execute();
+        $item = $req->fetchAll();
+        $req->closeCursor(); 
+        return $item;
+    } 
+
 }
