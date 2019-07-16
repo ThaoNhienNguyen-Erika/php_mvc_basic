@@ -91,9 +91,10 @@ class Post
         $req = $db->prepare('SELECT * FROM posts WHERE id = :id');
         $req->execute(array('id' => $id));
         $item = $req->fetch();
-        if (isset($item['id'])) {
+        if (isset($item['id'])) 
             return new Post($item['id'], $item['title'], $item['content']);
-        }
+        else 
+            header('Location: index.php?controller=pages&action=error');
         return null;
     }
     public static function search($title)
