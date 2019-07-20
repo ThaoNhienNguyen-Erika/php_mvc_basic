@@ -40,12 +40,14 @@ class PostsController extends BaseController
     }
     public function delete()
     {
-        
-        
-            $post = Post::find($_GET['id']);
-            $result = Post::delete($post);
-            
-            
+        # Tìm kiếm post ->
+        $post = Post::find($_GET['id']);
+        $result = Post::delete($post);
+        # Delete xong thì query lại data 
+        # Rồi render lại home cho người ta "> 
+        $posts = Post::all();
+        $data = array('posts' => $posts);
+        $this->render('index', $data);    
     }
     public function update()
     {

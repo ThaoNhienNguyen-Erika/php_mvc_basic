@@ -25,14 +25,15 @@
         echo '<td scope="row">
           ' . $post->content . '
         </td>';
+        # Ở đây thêm cái Id model Post để bật đúng POPUP nhé "> 
         echo '<td scope="row">
           <a class="btn btn-warning" href="index.php?controller=posts&action=update&id=' .$post->id. '">Update</a>
           
 
-          <a class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" href="index.php?controller=posts&action=delete&id=' .$post->id. '"> DELETE </a>
+          <a class="btn btn-danger" data-toggle="modal" data-target="#exampleModal' .$post->id. '" href="index.php?controller=posts&action=delete&id=' .$post->id. '"> DELETE </a>
         
           <!-- Modal -->
-          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal fade" id="exampleModal' .$post->id. '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
