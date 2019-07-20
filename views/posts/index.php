@@ -29,7 +29,7 @@
           <a class="btn btn-warning" href="index.php?controller=posts&action=update&id=' .$post->id. '">Update</a>
           
 
-          <a class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" href="index.php?controller=posts&action=delete&id=' .$post->id. '" method="POST"> DELETE </a>
+          <a class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" href="index.php?controller=posts&action=delete&id=' .$post->id. '"> DELETE </a>
         
           <!-- Modal -->
           <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -42,9 +42,7 @@
                 <div class="modal-body"> Do you want to delete this? </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">NO</button>
-              
-
-                  <button name="submit" type="submit" class="btn btn-primary">YES</button>
+                  <a class="btn btn-primary" href="index.php?controller=posts&action=delete&id='.$post->id.'" >YES</a>
                 </div>
               </div>
             </div>
