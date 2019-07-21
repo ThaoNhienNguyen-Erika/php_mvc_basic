@@ -100,7 +100,9 @@ class Post
     public static function search($title)
     {
         $db = DB::getInstance();
-        $req = $db->prepare('SELECT * FROM posts WHERE title LIKE '%title%'');
+        # $sql = $sql . " WHERE BOOK_TITLE like '%" . $_GET['txtName'] . "%'";
+        # $req = $db->prepare('SELECT * FROM posts WHERE title LIKE '%title%'');
+        $req = $db->prepare("SELECT * FROM posts WHERE title LIKE '%" . $_GET['input_title'] . "%'");
         $req->execute();
         $item = $req->fetchAll();
         $req->closeCursor(); 

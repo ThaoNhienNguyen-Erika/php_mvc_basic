@@ -1,9 +1,12 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <div class="col-xl-12">
 <a href="index.php?controller=posts&action=add" type="button" class="btn btn-primary">Create new post</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<input type="text" id="myInput" placeholder="Search for titles.." title="Type in a title">
-<a href="index.php?controller=posts&action=search" type="button" class="btn btn-primary">Search</a>
 
-  <table class="table mt-3">
+<input type="text" id="myInput" onkeyup="myFunction()" name="input_title" placeholder="Search for titles.." title="Type in a title">
+<i class="fa fa-search"></i>
+
+  <table class="table mt-3" id="myTable">
     <thead>
       <tr>
         <th scope="col">Id</th>
@@ -25,14 +28,15 @@
         echo '<td scope="row">
           ' . $post->content . '
         </td>';
+        # Ở đây thêm cái Id model Post để bật đúng POPUP nhé "> 
         echo '<td scope="row">
           <a class="btn btn-warning" href="index.php?controller=posts&action=update&id=' .$post->id. '">Update</a>
           
 
-          <a class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" href="index.php?controller=posts&action=delete&id=' .$post->id. '"> DELETE </a>
+          <a class="btn btn-danger" data-toggle="modal" data-target="#exampleModal' .$post->id. '" href="index.php?controller=posts&action=delete&id=' .$post->id. '"> DELETE </a>
         
           <!-- Modal -->
-          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal fade" id="exampleModal' .$post->id. '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -53,6 +57,28 @@
     ?>
     </tbody>
   </table>
+
+  <script>
+          function myFunction() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+              td = tr[i].getElementsByTagName("td")[1];
+              if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                  tr[i].style.display = "";
+                } else {
+                  tr[i].style.display = "none";
+                }
+              }       
+            }
+          }
+  </script>
+
 </div>
 
 
