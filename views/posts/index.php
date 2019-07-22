@@ -4,7 +4,8 @@
 <a href="index.php?controller=posts&action=add" type="button" class="btn btn-primary">Create new post</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 <input type="text" id="myInput" onkeyup="myFunction()" name="input_title" placeholder="Search for titles.." title="Type in a title">
-<i class="fa fa-search"></i>
+<i class="fa fa-search"></i> 
+<input type="button" value="Submit" onclick="Validate()">
 
   <table class="table mt-3" id="myTable">
     <thead>
@@ -57,7 +58,7 @@
     ?>
     </tbody>
   </table>
-
+  
   <script>
           function myFunction() {
             var input, filter, table, tr, td, i, txtValue;
@@ -66,7 +67,7 @@
             table = document.getElementById("myTable");
             tr = table.getElementsByTagName("tr");
             for (i = 0; i < tr.length; i++) {
-              td = tr[i].getElementsByTagName("td")[1];
+              td = tr[i].getElementsByTagName("td")[1]; 
               if (td) {
                 txtValue = td.textContent || td.innerText;
                 if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -76,6 +77,18 @@
                 }
               }       
             }
+          }
+
+          function Validate()
+          {
+            //Regex for Valid Characters i.e. Alphabets, Numbers and Space.
+            var regex = /^[A-Za-z0-9 ]+$/
+
+            //Validate TextBox value against the Regex.
+            var isValid = regex.test(document.getElementById("myInput").value);
+            if (!isValid) 
+                alert("Không nhập các kí tự đặc biệt. Mời bạn nhập lại.");
+            return isValid;
           }
   </script>
 
