@@ -97,7 +97,7 @@ class Post
             header('Location: index.php?controller=pages&action=error');
         return null;
     }
-    public static function search($title)
+    public static function searchold($title)
     {
         $db = DB::getInstance();
         # $sql = $sql . " WHERE BOOK_TITLE like '%" . $_GET['txtName'] . "%'";
@@ -108,5 +108,12 @@ class Post
         $req->closeCursor(); 
         return $item;
     } 
-
+    public static function search($input) {
+        $list = [];
+        $db = DB::getInstance();
+        $req = $db -> query("SELECT * FROM posts WHERE id LIKE N'%$input%' OR title LIKE N'%$input%' OR content LIKE N'%$input%';");
+        foreach ($req->fetchAll() as $item) 
+            $list[] = new Post($item['id'], $item['title'], $item['content']);
+        return $list; 
+    }
 }

@@ -15,6 +15,15 @@ class PostsController extends BaseController
     }
     public function search()
     {
+        if(isset($_GET['input'])) {
+        $input = $_GET['input'];
+        }
+        $posts = Post::search($input);
+        $data = array('posts' => $posts);
+        $this->render('search', $data);
+    }
+    public function searchold()
+    {
         if (isset($_GET['input_title']))
         {
             $result = Post::search($post);

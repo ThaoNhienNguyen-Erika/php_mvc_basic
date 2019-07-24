@@ -1,11 +1,10 @@
-<!-- Trang này em để cho việc tìm kiếm mà có bấm nút Search ạ và hiện em chưa làm được chức năng Search này -->
---------------------------------------
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <div class="col-xl-12">
 <a href="index.php?controller=posts&action=add" type="button" class="btn btn-primary">Create new post</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-<input type="text" id="myInput" onkeyup="myFunction()" name="input_title" placeholder="Search for titles.." title="Type in a title">
-
-<a href="index.php?controller=posts&action=search&title=' .$post->id. '" type="button" class="btn btn-primary">Search</a>
+    <a href="index.php?controller=posts" type="button" class="btn btn-primary">Back to list</a>
 
   <table class="table mt-3" id="myTable">
     <thead>
@@ -58,46 +57,6 @@
     ?>
     </tbody>
   </table>
-
-  <script>
-          function myFunction() {
-            var input, filter, table, tr, td, i, txtValue;
-            input = document.getElementById("myInput");
-            filter = input.value.toUpperCase();
-            table = document.getElementById("myTable");
-            tr = table.getElementsByTagName("tr");
-            for (i = 0; i < tr.length; i++) {
-              td = tr[i].getElementsByTagName("td")[1];
-              if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                  tr[i].style.display = "";
-                } else {
-                  tr[i].style.display = "none";
-                }
-              }       
-            }
-          }
-  </script>
-
 </div>
 
-
-
--------------------------
-<div class="col-xl-12">
-	<form action='index.php?controller=posts&action=search' method='get'>
-		<input type='text' name='input_title'> 
-		<input type='submit' value='search'>
-	</form>
-</div>
-<!--<div>
-    
-        // List up all results.
-        foreach ($results as $val)
-        {
-            echo $val['title'];
-        }
-    ?>
-</div>
 
