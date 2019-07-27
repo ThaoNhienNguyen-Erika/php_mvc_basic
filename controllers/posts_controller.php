@@ -15,14 +15,36 @@ class PostsController extends BaseController
     }
     public function search()
     {
+        if(isset($_GET['input'])) {
+        $input = $_GET['input'];
+        }
+        $posts = Post::search($input);
+        $data = array('posts' => $posts);
+        $this->render('search', $data);
+    }
+    public function searchold()
+    {
+        if (isset($_GET['input_title']))
+        {
+            $result = Post::search($post);
+            $result = array('result' => $result);
+            $_GET = array();
+            $this->render('index', $result);
+        }
+        else{
+            $posts = Post::all();
+            $data = array('posts' => $posts);
+            $this->render('index', $data);  
+        }
+
         // Retrieve the posted search term.
-        $search_term = $this->title->post('search');
+       # $search_term = $this->title->post('search');
 
         // Use a model to retrieve the results.
-        $data['results'] = $this->search_model->get_results($search_term);
+        # $data['results'] = $this->search_model->get_results($search_term);
 
         // Pass the results to the view.
-        $this->load->view('search_results',$data);
+        # $this->load->view('search_results',$data);
     }
     public function add()
     {
@@ -40,14 +62,14 @@ class PostsController extends BaseController
     }
     public function delete()
     {
-        # Tìm kiếm post ->
-        $post = Post::find($_GET['id']);
-        $result = Post::delete($post);
-        # Delete xong thì query lại data 
-        # Rồi render lại home cho người ta "> 
-        $posts = Post::all();
-        $data = array('posts' => $posts);
-        $this->render('index', $data);    
+         # Tìm kiếm post ->
+         $post = Post::find($_GET['id']);
+         $result = Post::delete($post);
+         # Delete xong thì query lại data 
+         # Rồi render lại home  
+         $posts = Post::all();
+         $data = array('posts' => $posts);
+         $this->render('index', $data);    
     }
     public function update()
     {

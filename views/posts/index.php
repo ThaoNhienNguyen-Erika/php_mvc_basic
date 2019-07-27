@@ -1,9 +1,17 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <div class="col-xl-12">
 <a href="index.php?controller=posts&action=add" type="button" class="btn btn-primary">Create new post</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<input type="text" id="myInput" placeholder="Search for titles.." title="Type in a title">
-<a href="index.php?controller=posts&action=search" type="button" class="btn btn-primary">Search</a>
 
-  <table class="table mt-3">
+<form class="searchbar" action="" method="GET">
+  <input type="hidden" name="controller" value="posts">
+  <input type="hidden" name="action" value="search">
+  <input type="text" class="search-box" id="myInput" name="input" placeholder="Search for titles.." title="Type in a title">
+  <i class="fa fa-search"></i> 
+  <button type="submit" class="submit" onclick="Validate()">Tìm kiếm</button>
+</form>
+
+  <table class="table mt-3" id="myTable">
     <thead>
       <tr>
         <th scope="col">Id</th>
@@ -54,6 +62,20 @@
     ?>
     </tbody>
   </table>
+
+  <script>
+    function Validate()
+    {
+      //Regex for Valid Characters i.e. Alphabets, Numbers and Space.
+      var regex = /^[A-Za-z0-9 ]/
+
+      //Validate TextBox value against the Regex.
+      var isValid = regex.test(document.getElementById("myInput").value);
+      if (!isValid) 
+        alert("Không nhập các kí tự đặc biệt. Mời bạn nhập lại.");
+    }
+  </script>
+
 </div>
 
 
