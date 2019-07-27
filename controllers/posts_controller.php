@@ -15,26 +15,24 @@ class PostsController extends BaseController
     }
     public function search()
     {
-        if(isset($_GET['input'])) {
-        $input = $_GET['input'];
-        $posts = Post::search($input);
-        $data = array('posts' => $posts);
-        $this->render('index', $data);
+        if (isset($_GET['input'])) {
+            $input = $_GET['input'];
+            $posts = Post::search($input);
+            $data = array('posts' => $posts);
+            $this->render('index', $data);
         }
     }
     public function searchold()
     {
-        if (isset($_GET['input_title']))
-        {
+        if (isset($_GET['input_title'])) {
             $result = Post::search($post);
             $result = array('result' => $result);
             $_GET = array();
             $this->render('index', $result);
-        }
-        else{
+        } else {
             $posts = Post::all();
             $data = array('posts' => $posts);
-            $this->render('index', $data);  
+            $this->render('index', $data);
         }
     }
     public function add()
@@ -53,14 +51,14 @@ class PostsController extends BaseController
     }
     public function delete()
     {
-         # Tìm kiếm post ->
-         $post = Post::find($_GET['id']);
-         $result = Post::delete($post);
-         # Delete xong thì query lại data 
-         # Rồi render lại home  
-         $posts = Post::all();
-         $data = array('posts' => $posts);
-         $this->render('index', $data);    
+        # Tìm kiếm post ->
+        $post = Post::find($_GET['id']);
+        $result = Post::delete($post);
+        # Delete xong thì query lại data
+        # Rồi render lại home
+        $posts = Post::all();
+        $data = array('posts' => $posts);
+        $this->render('index', $data);
     }
     public function update()
     {
@@ -77,6 +75,17 @@ class PostsController extends BaseController
             $post = Post::find($_GET['id']);
             $data = array('post' => $post);
             $this->render('update', $data);
+        }
+    }
+    # example AJAX delete -----
+    public function deleteUser()
+    {
+        if (isset($_POST['id'])) {
+            # Get id từ URL
+            $id = $_POST['id'];
+            $status = Post::deleteAjax($id);
+            echo json_encode($status);
+            die();
         }
     }
 }

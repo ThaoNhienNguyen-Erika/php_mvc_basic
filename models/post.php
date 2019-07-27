@@ -120,4 +120,25 @@ class Post
             }
         return $list; 
     }
+
+    public static function deleteAjax($id)
+    {
+        $result = array('status', 'message');
+        try {
+            $db = DB::getInstance();
+            $query = "DELETE FROM POSTS WHERE id = " . $id . ";";
+            if ($db->exec($query) !== false) {
+                $result['status'] = true;
+                $result['message'] = "Delete success";
+            } else {
+                $result['status'] = false;
+                $result['message'] = "Something's wrong. Please try again!";
+            }
+        } catch (Exception $e) {
+            $result['status'] = false;
+            $result['message'] = "Error wrong query";
+        }
+        return $result;
+    }
+
 }
