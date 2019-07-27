@@ -17,10 +17,10 @@ class PostsController extends BaseController
     {
         if(isset($_GET['input'])) {
         $input = $_GET['input'];
-        }
         $posts = Post::search($input);
         $data = array('posts' => $posts);
-        $this->render('search', $data);
+        $this->render('index', $data);
+        }
     }
     public function searchold()
     {
@@ -36,15 +36,6 @@ class PostsController extends BaseController
             $data = array('posts' => $posts);
             $this->render('index', $data);  
         }
-
-        // Retrieve the posted search term.
-       # $search_term = $this->title->post('search');
-
-        // Use a model to retrieve the results.
-        # $data['results'] = $this->search_model->get_results($search_term);
-
-        // Pass the results to the view.
-        # $this->load->view('search_results',$data);
     }
     public function add()
     {
