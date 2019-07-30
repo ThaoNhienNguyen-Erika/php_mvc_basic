@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <div class="col-xl-12">
 <a href="index.php?controller=posts&action=add" type="button" class="btn btn-primary">Create new post</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -8,7 +9,7 @@
   <input type="hidden" name="action" value="search">
   <input type="text" class="search-box" id="myInput" name="input" placeholder="Search for titles.." title="Type in a title">
   <i class="fa fa-search"></i> 
-  <button type="submit" class="submit" onclick="Validate()">Tìm kiếm</button>
+  <button type="submit" class="submit" onclick="Validate()" data-toggle="modal" data-target="#Modal">Tìm kiếm</button>
 </form>
 
   <table class="table mt-3" id="myTable">
@@ -56,6 +57,25 @@
               </div>
             </div>
           </div>
+
+          <!-- Modal -->
+          <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+                </div>
+                <div class="modal-body"> 
+                  <div class="alert alert-warning" id="result-search"> Không nhập các kí tự đặc biệt. Mời bạn nhập lại. </div>
+                </div>
+                <div class="modal-footer">
+                  <button id="btn-cancel" type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </td>';
         echo '</tr>';
     }
@@ -72,7 +92,50 @@
       //Validate TextBox value against the Regex.
       var isValid = regex.test(document.getElementById("myInput").value);
       if (!isValid) 
-        alert("Không nhập các kí tự đặc biệt. Mời bạn nhập lại.");
+      {
+        $result['status'] = false;
+        $result['message'] = "Something's wrong. Please try again!";
+      }
+      else{
+        $result['status'] = true;
+        $result['message'] = "Delete success";
+      } 
+      //alert("Không nhập các kí tự đặc biệt. Mời bạn nhập lại.");
+    }
+
+    function search(input){
+      $.ajax({
+          url : "/index.php?controller=posts&action=search",
+          type : "post",
+          data : {
+               input:input
+          },
+          success : function (response){
+            console.log("response>>>>",response)
+						const result = $.parseJSON(response)
+						// Case Delete Success ->>>
+              if(result.status)
+							{
+								// Show message lên popup
+								$(`#result-search`).html();
+								$(`#result-search`).html(result.message);
+								// Chỉnh style message
+								$(`#result-search`).removeClass("alert-warning");
+								$(`#result-search`).addClass("alert-success");
+								//Bỏ nút xóa --- thay nút Cancel = OK
+								$(`#btn-cancel`).html("OK");
+							}
+							//Case delete fail ->>>
+							else {
+								//Show message
+								$(`#result-search`).html();
+								$(`#result-search`).html(result.message);
+								// Chỉnh style message
+								$(`#result-search`).removeClass("alert-warning")
+								$(`#result-search`).addClass("alert-danger")
+							}
+          }
+      });
     }
   </script>
 

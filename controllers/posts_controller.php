@@ -15,12 +15,30 @@ class PostsController extends BaseController
     }
     public function search()
     {
-        if(isset($_GET['input'])) {
+        if (isset($_POST['input'])) {
+            # Get id từ URL
+            $input = $_POST['input'];
+            $status = Post::search($input);
+            echo json_encode($status);
+            die();
+        }
+        /*if(isset($_GET['input'])) {
         $input = $_GET['input'];
         }
         $posts = Post::search($input);
         $data = array('posts' => $posts);
-        $this->render('search', $data);
+        $this->render('search', $data);*/
+    }
+    # example AJAX delete -----
+    public function searchAjax()
+    {
+        if (isset($_POST['id'])) {
+            # Get id từ URL
+            $id = $_POST['id'];
+            $status = Post::deleteAjax($id);
+            echo json_encode($status);
+            die();
+        }
     }
     public function searchold()
     {
