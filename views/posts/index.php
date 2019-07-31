@@ -86,15 +86,16 @@
     }
 
     function search(input){
-      // ???? ???? input của em là cái gì vậy @@~ 
+      // sai url ---- dùng Xamp nên phải có thêm tên folder ở đầu. 
       $.ajax({
-          url : "/index.php?controller=posts&action=search",
+          url : "/php_mvc_basic/index.php?controller=posts&action=search",
           type : "POST",
           data : {
                input:input
           },
           success : function (response){
             console.log("response>>>>",response)
+            alert(response);
 						// const result = $.parseJSON(response)
 						// // Case Success ->>>
             //   if(result.status)

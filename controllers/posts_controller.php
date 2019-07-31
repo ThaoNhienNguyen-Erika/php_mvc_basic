@@ -20,20 +20,14 @@ class PostsController extends BaseController
         // input:input
         //}
         // Tức là cái field truyền lên là input --> 
-        // echo 1;
+       
         if (isset($_POST['input'])) {
-        $posts = Post::all();
-        $data = array('posts' => $posts);
-        echo json_encode($data);
-        die();
+            # Get id từ URL
+            $id = $_POST['input'];
+            $status = Post::search($id);
+            echo json_encode($status);
+            die();
         }
-        // if (isset($_POST['input'])) {
-        //     # Get id từ URL
-        //     $id = $_POST['input'];
-        //     $status = Post::search($id);
-        //     echo json_encode($status);
-        //     die();
-        // }
         /*if(isset($_GET['input'])) {
         $input = $_GET['input'];
         }
