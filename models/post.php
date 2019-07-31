@@ -111,7 +111,8 @@ class Post
     public static function search($input) {
         $list = [];
         $db = DB::getInstance();
-        $req = $db -> query("SELECT * FROM posts WHERE id LIKE N'%$input%' OR title LIKE N'%$input%' OR content LIKE N'%$input%';");
+        # Câu query bị sai trầm trọng @@~ bữa a fix rồi mà quên nói 
+        $req = $db -> query("SELECT * FROM posts WHERE id = ".$input." OR title LIKE '%".$input."%' OR content LIKE '%".$input."%';");
         foreach ($req->fetchAll() as $item) 
             $list[] = new Post($item['id'], $item['title'], $item['content']);
         return $list; 

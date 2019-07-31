@@ -1,16 +1,15 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- Tất cả các file css or library của JS thì nên import trong layout ---  -->
 
 <div class="col-xl-12">
 <a href="index.php?controller=posts&action=add" type="button" class="btn btn-primary">Create new post</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-<form class="searchbar" action="" method="GET">
-  <input type="hidden" name="controller" value="posts">
-  <input type="hidden" name="action" value="search">
+<!-- Ở đây e dùng form --- nên default khi click button nó sẽ call action của form -->
+<!-- <form class="searchbar" action="" method="GET"> -->
+  <!-- <input type="hidden" name="controller" value="posts"> -->
+  <!-- <input type="hidden" name="action" value="search"> -->
   <input type="text" class="search-box" id="myInput" name="input" placeholder="Search for titles.." title="Type in a title">
   <i class="fa fa-search"></i> 
-  <button type="submit" class="submit" onclick="Validate()" data-toggle="modal" data-target="#Modal">Tìm kiếm</button>
-</form>
+  <button type="submit" class="submit" onclick="handleClick();">Tìm kiếm</button>
+<!-- </form> -->
 
   <table class="table mt-3" id="myTable">
     <thead>
@@ -57,25 +56,6 @@
               </div>
             </div>
           </div>
-
-          <!-- Modal -->
-          <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
-                </div>
-                <div class="modal-body"> 
-                  <div class="alert alert-warning" id="result-search"> Không nhập các kí tự đặc biệt. Mời bạn nhập lại. </div>
-                </div>
-                <div class="modal-footer">
-                  <button id="btn-cancel" type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
         </td>';
         echo '</tr>';
     }
@@ -84,58 +64,62 @@
   </table>
 
   <script>
-    function Validate()
+    function Validate(keySearch)
     {
       //Regex for Valid Characters i.e. Alphabets, Numbers and Space.
       var regex = /^[A-Za-z0-9 ]/
-
+      let result = {
+        status:false,
+      };
       //Validate TextBox value against the Regex.
-      var isValid = regex.test(document.getElementById("myInput").value);
-      if (!isValid) 
+      var isValid = regex.test(keySearch);
+      if (isValid) 
       {
-        $result['status'] = false;
-        $result['message'] = "Something's wrong. Please try again!";
+        // Sai cú pháp --- cái này là cú pháp của PHP ---- copy nhiệt tình vậy em @@~ 
+        result.status = true;
       }
       else{
-        $result['status'] = true;
-        $result['message'] = "Delete success";
+        result.status = false;
       } 
-      //alert("Không nhập các kí tự đặc biệt. Mời bạn nhập lại.");
+      return result;
+      
     }
 
     function search(input){
+      // ???? ???? input của em là cái gì vậy @@~ 
       $.ajax({
           url : "/index.php?controller=posts&action=search",
-          type : "post",
+          type : "POST",
           data : {
                input:input
           },
           success : function (response){
             console.log("response>>>>",response)
-						const result = $.parseJSON(response)
-						// Case Delete Success ->>>
-              if(result.status)
-							{
-								// Show message lên popup
-								$(`#result-search`).html();
-								$(`#result-search`).html(result.message);
-								// Chỉnh style message
-								$(`#result-search`).removeClass("alert-warning");
-								$(`#result-search`).addClass("alert-success");
-								//Bỏ nút xóa --- thay nút Cancel = OK
-								$(`#btn-cancel`).html("OK");
-							}
-							//Case delete fail ->>>
-							else {
-								//Show message
-								$(`#result-search`).html();
-								$(`#result-search`).html(result.message);
-								// Chỉnh style message
-								$(`#result-search`).removeClass("alert-warning")
-								$(`#result-search`).addClass("alert-danger")
-							}
+						// const result = $.parseJSON(response)
+						// // Case Success ->>>
+            //   if(result.status)
+						// 	{
+						// 		alert(response.status);
+						// 	}
           }
       });
+    }
+    
+    function handleClick()
+    {
+      //Bước 1: lấy value -- key search 
+      //Bước 2: Gọi hàm validate ---> để check key search hợp lệ hay k
+      // Bước 3 call Ajax search ==> 
+      // Hiện tại đang bug vì Controller e viết sai ... 
+
+      const keySearch = document.getElementById("myInput").value;
+      // e.preventDefault();
+      let checkString = Validate(keySearch);
+      if(checkString.status === true)
+      {
+        console.log("keyseach>>>",keySearch)
+        search(keySearch) 
+      }        
     }
   </script>
 

@@ -15,13 +15,25 @@ class PostsController extends BaseController
     }
     public function search()
     {
+        // $_POST là biến để lấy dữ liệu --- key search 
+        // Ở dưới mình dùng Ajax bắn data: {  
+        // input:input
+        //}
+        // Tức là cái field truyền lên là input --> 
+        // echo 1;
         if (isset($_POST['input'])) {
-            # Get id từ URL
-            $input = $_POST['input'];
-            $status = Post::search($input);
-            echo json_encode($status);
-            die();
+        $posts = Post::all();
+        $data = array('posts' => $posts);
+        echo json_encode($data);
+        die();
         }
+        // if (isset($_POST['input'])) {
+        //     # Get id từ URL
+        //     $id = $_POST['input'];
+        //     $status = Post::search($id);
+        //     echo json_encode($status);
+        //     die();
+        // }
         /*if(isset($_GET['input'])) {
         $input = $_GET['input'];
         }
