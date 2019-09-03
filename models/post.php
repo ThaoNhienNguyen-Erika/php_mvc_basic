@@ -4,6 +4,7 @@ class Post
     public $id;
     public $title;
     public $content;
+    // __construct() gets executed when you declare it within the class.
     public function __construct($id, $title, $content)
     {
         $this->id = $id;
@@ -12,7 +13,7 @@ class Post
     }
     public static function all()
     {
-        $list = [];
+        // $list = [];
         try {
             $db = DB::getInstance();
             $req = $db->query('SELECT * FROM posts');
@@ -94,26 +95,27 @@ class Post
         if (isset($item['id'])) 
             return new Post($item['id'], $item['title'], $item['content']);
         else 
-            header('Location: index.php?controller=pages&action=error');
+            header('Location: index.php?controller=posts&action=error');
         return null;
     }
-    public static function searchold($title)
-    {
-        $db = DB::getInstance();
-        # $sql = $sql . " WHERE BOOK_TITLE like '%" . $_GET['txtName'] . "%'";
-        # $req = $db->prepare('SELECT * FROM posts WHERE title LIKE '%title%'');
-        $req = $db->prepare("SELECT * FROM posts WHERE title LIKE '%" . $_GET['input_title'] . "%'");
-        $req->execute();
-        $item = $req->fetchAll();
-        $req->closeCursor(); 
-        return $item;
-    } 
     public static function search($input) {
         $list = [];
         $db = DB::getInstance();
-        $req = $db -> query("SELECT * FROM posts WHERE title LIKE '%".$input."%' OR content LIKE '%".$input."%' OR id='".$input."'; ");
+        $req = $db -> query("SELECT * FROM posts WHERE title LIKE N'%".$input."%' OR content LIKE N'%".$input."%' OR id ='%".$input."%'; ");
+        //  $req = $db -> query("SELECT * FROM posts WHERE title LIKE '%".$input."%' OR content LIKE '%".$input."%' OR id='".$input."'; ");
         foreach ($req->fetchAll() as $item) 
             $list[] = new Post($item['id'], $item['title'], $item['content']);
         return $list; 
     }
+    // public static function searchold($title)
+    // {
+    //     $db = DB::getInstance();
+    //     # $sql = $sql . " WHERE BOOK_TITLE like '%" . $_GET['txtName'] . "%'";
+    //     # $req = $db->prepare('SELECT * FROM posts WHERE title LIKE '%title%'');
+    //     $req = $db->prepare("SELECT * FROM posts WHERE title LIKE '%" . $_GET['input_title'] . "%'");
+    //     $req->execute();
+    //     $item = $req->fetchAll();
+    //     $req->closeCursor(); 
+    //     return $item;
+    // } 
 }

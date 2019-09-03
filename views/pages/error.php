@@ -1,3 +1,1 @@
-<?php
-  echo 'Có lỗi xảy ra!';
-?>
+<h1 style="text-align: center;">Có lỗi xảy ra!<h1>

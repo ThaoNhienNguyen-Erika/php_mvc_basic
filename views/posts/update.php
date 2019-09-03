@@ -1,5 +1,5 @@
 <div class="col-xl-12">
-    <a href="index.php?controller=posts" type="button" class="btn btn-primary">Back to list</a>
+    <a href="index.php" type="button" class="btn btn-primary">Back to list</a>
 </div>
 <div class="col-xl-12">
     <form class="mt-3" action="index.php?controller=posts&action=update&id=<?php echo $post->id ?>" method="POST">
